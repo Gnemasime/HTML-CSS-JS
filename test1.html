@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <!---<link rel="stylesheet" href="styles.css">-->
+</head>
+  <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.input-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#todo-input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 70%;
+}
+
+#add-todo-btn {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #4CAF50;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+#add-todo-btn:hover {
+    background-color: #45a049;
+}
+
+#todo-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#todo-list li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button.delete-btn {
+    background-color: red;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+button.edit-btn {
+    background-color: orange;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+
+</style>
+<body>
+    <div class="container">
+        <header>
+            <h1>Todo List</h1>
+        </header>
+
+        <div class="input-container">
+            <input type="text" id="todo-input" placeholder="Add a new todo">
+            <button id="add-todo-btn">Add Todo</button>
+        </div>
+
+        <ul id="todo-list"></ul>
+    </div>
+  
+<script>
+  const addTodoBtn = document.getElementById("add-todo-btn");
+const todoInput = document.getElementById("todo-input");
+const todoList = document.getElementById("todo-list");
+
+addTodoBtn.addEventListener("click", addTodo);
+
+function addTodo() {
+    const todoText = todoInput.value.trim();
+
+    if (todoText !== "") {
+        const todoItem = document.createElement("li");
+
+        const todoContent = document.createElement("span");
+        todoContent.textContent = todoText;
+        todoItem.appendChild(todoContent);
+
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "Edit";
+        editBtn.classList.add("edit-btn");
+        editBtn.addEventListener("click", () => editTodo(todoItem, todoContent));
+        todoItem.appendChild(editBtn);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.addEventListener("click", () => deleteTodo(todoItem));
+        todoItem.appendChild(deleteBtn);
+
+        todoList.appendChild(todoItem);
+        todoInput.value = ""; // Clear input field
+    }
+}
+
+function deleteTodo(todoItem) {
+    todoItem.remove();
+}
+
+function editTodo(todoItem, todoContent) {
+    const newTodoText = prompt("Edit your todo:", todoContent.textContent);
+    if (newTodoText) {
+        todoContent.textContent = newTodoText;
+    }
+}
+
+</script>
+    <!--<script src="script.js"></script>-->
+</body>
+</html>
